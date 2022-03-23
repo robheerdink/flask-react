@@ -1,5 +1,11 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# python backend
+/api/__pycache__
+/api/venv
+.idea/
+*.pyc
+
 # dependencies
 /node_modules
 /.pnp
@@ -21,3 +27,4 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
