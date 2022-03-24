@@ -3,8 +3,9 @@ Example flask template with
 - Postgress database
 - SqlAlchemy
 - Models 
-- generate models
-- generate data
+- object serialization (marshmellow)
+- generate models (omymodels)
+- generate dummy data (faker)
 
 python -m venv venv
 . venv/bin/activate
@@ -17,9 +18,7 @@ pip install marshmallow-sqlalchemy
 pip install psycopg2-binary
 pip install python-dotenv
 
-optional, only needed for devlopment
+optional, only needed for devlopment:
 pip install Faker
 pip install omymodels
-
-
 ```
