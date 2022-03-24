@@ -1,4 +1,4 @@
-#!/home/rob/work/_samples/react-flask-app/api/venv/bin/python3
+#!/home/rob/work/projects/samples/flask-react/api/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

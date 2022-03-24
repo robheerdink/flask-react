@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Link, Routes, Route } from 'react-router-dom';
+import { JsonToTable } from "react-json-to-table";
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
-  
-
+  const sep = ' | '
   return (
     <div className="App">
       <header className="App-header">
         <BrowserRouter>
           <div>
-            <Link className="App-link" to="/">Home</Link>
-            &nbsp;|&nbsp;
-            <Link className="App-link" to="/page2">Page2</Link>
+            <Link className="App-link" to="/">home</Link>{sep}
+            <Link className="App-link" to="/test">test</Link>{sep}
+            <Link className="App-link" to="/channels">Show Channels</Link>
           </div>
           <Routes>
-            <Route exact path="/"  element={<Page1/>} />
-            <Route path="/page2"  element={<Page2/>}  />
+            <Route exact path="/"  element={<Home/>} />
+            <Route path="/test"  element={<Test/>}  />
+            <Route path="/channels"  element={<Channels/>}  />
           </Routes>
         </BrowserRouter>
       </header>
@@ -25,7 +26,7 @@ function App() {
   );
 }
 
-function Page1() {
+function Home() {
   const [currentTime, setCurrentTime] = useState(0);
 
   useEffect(() => {
@@ -50,9 +51,8 @@ function Page1() {
 }
 
 
-function Page2() {
+function Test() {
   const [count, setCount] = useState(0);
-
   return (
     <div>
       <p>You clicked {count} times</p>
@@ -64,5 +64,31 @@ function Page2() {
 }
 
 
+function Channels() {
+
+  const [channels, setChannels] = useState(0);
+
+  const myJson = {
+    "Student": { name: "Jack", email: "jack@xyz.com" },
+    "Student id": 888,
+    "Sponsors": [
+      { name: "john", email: "john@@xyz.com" },
+      { name: "jane", email: "jane@@xyz.com" }
+    ]
+  };
+
+  useEffect(() => {
+    fetch('/api/get_channels').then(res => res.json()).then(data => {
+      setChannels(data);
+    });
+  }, []);
+
+  return (
+  <div>
+    <p/>  
+    <JsonToTable json={channels} />
+  </div>
+  );
+}
 
 export default App;
