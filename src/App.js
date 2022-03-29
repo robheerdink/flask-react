@@ -6,6 +6,7 @@ import PageTest from './pages/Test';
 import PageTableSimple from './pages/Table1';
 import PageTableFilter from './pages/Table2';
 import PageTablePagination from './pages/Table3';
+import PageTableSorting from './pages/Table4';
 
 function App() {
   const sep = ' | '
@@ -18,15 +19,17 @@ function App() {
             <Link className="App-link" to="/test">test</Link>{sep}
             <Link className="App-link" to="/table1">Table simple</Link>{sep}
             <Link className="App-link" to="/table2">Table Filter</Link> {sep}
-            <Link className="App-link" to="/table3">Table Pagination</Link>
+            <Link className="App-link" to="/table3">Table Pagination</Link>{sep}
+            <Link className="App-link" to="/table4">Table Sorting</Link>
           </div>
           </header>
           <Routes>
             <Route exact path="/"  element={<PageHome/>} />
             <Route path="/test"  element={<PageTest/>}  />
-            <Route path="/table1"  element={<PageTableSimple/>}  />
-            <Route path="/table2"  element={<PageTableFilter/>}  />
-            <Route path="/table3"  element={<PageTablePagination/>}  />
+            <Route path="/table1"  element={<PageTableSimple/>} />
+            <Route path="/table2"  element={<PageTableFilter/>} />
+            <Route path="/table3"  element={<PageTablePagination/>} />
+            <Route path="/table4"  element={<PageTableSorting/>} />
           </Routes>
         </BrowserRouter>
     </div>

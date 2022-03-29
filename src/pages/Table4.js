@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import PaginationTable from '../components/pagination.table';
+import SortingTable from '../components/sorting.table';
 
-function PageTableFilter() {
+function PageTableSorting() {
     const columns = [
       {
         Header: ' ',
@@ -33,9 +33,9 @@ function PageTableFilter() {
     return (
     <div>
       <h3>Filtering Table</h3>
-      <PaginationTable columns={columns} data={channels} />
+      <SortingTable columns={columns} data={channels} />
     </div>
     )
   }
   
-  export default PageTableFilter
+  export default PageTableSorting
