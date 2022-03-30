@@ -4,6 +4,7 @@
 /api/__pycache__
 /api/venv
 .idea/
+.vscode
 *.pyc
 
 # dependencies
