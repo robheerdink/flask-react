@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 function PageTest() {
 	const [count, setCount] = useState(0);
+	console.log("test")
 	
 	return (
 		<div>

@@ -62,7 +62,7 @@ function Table({ columns, data }) {
         nextPage,
         previousPage,
         setPageSize,
-        state: { pageIndex, pageSize },
+        state: { pageIndex, pageSize     },
         preGlobalFilteredRows,
         setGlobalFilter,
     } = useTable(
@@ -181,7 +181,7 @@ function Table({ columns, data }) {
 function FPSTable({ columns, data }) {
     // console.log(JSON.stringify(data));
     return (
-        <Table columns={columns} data={data} />
+        <table columns={columns} data={data} />
     )
 }
 

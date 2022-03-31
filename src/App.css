@@ -1,7 +1,46 @@
-.App {
-  text-align: center;
+/* load custom font */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+/* center with flex box */
+.main{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: whitesmoke;
+  color: #212121;
+  flex-direction: column;
 }
 
+/* use custom font */
+.main-header{
+  font-family: 'Montserrat', sans-serif;
+}
+
+.create-form label{
+  color: #212121;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px !important;
+  margin: 10px;
+}
+
+.App {
+  text-align: center;
+  background-color: whitesmoke;
+}
+
+.App-header {
+  background-color: whitesmoke;
+  font-size: calc(10px + 1vmin);
+  color: #212121;
+  margin-bottom: 10px;
+}
+
+.App-link {
+  color: #50a5cc;
+}
+
+/* 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -13,17 +52,6 @@
   }
 }
 
-.App-header {
-  background-color: #fff;
-  font-size: calc(10px + 1vmin);
-  color: rgb(0, 0, 0);
-  margin-bottom: 10px;
-}
-
-.App-link {
-  color: #0f95b9;
-}
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -31,4 +59,5 @@
   to {
     transform: rotate(360deg);
   }
-}
+} 
+*/

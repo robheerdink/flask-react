@@ -13,16 +13,8 @@ function PageHome() {
     }, []);
   
     return (
-      <div>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Edit <code>src/App.js</code> and save to reload.</p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >Learn React</a>
-        <p>The current time is {currentTime}.</p>
+      <div className="main">
+        <h2 className="main-header">This is a custon font, centered in flex div.<br/>The current time is {currentTime}</h2>
       </div>
     )
 }
