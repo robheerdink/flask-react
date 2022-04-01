@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import api from "../service/http-common";
 
 
 export default function Read() {
@@ -8,7 +9,7 @@ export default function Read() {
     const [APIData, setAPIData] = useState([]);
 
     useEffect(() => {
-        axios.get(`https://624594416b7ecf057c20719c.mockapi.io/fakeData`)
+        api.get(`/fakeData`)
             .then((response) => {
                 console.log(response.data)
                 setAPIData(response.data);
@@ -17,7 +18,7 @@ export default function Read() {
 
 
     const getData = () => {
-        axios.get(`https://624594416b7ecf057c20719c.mockapi.io/fakeData`)
+        api.get(`/fakeData`)
             .then((getData) => {
                 setAPIData(getData.data);
             })

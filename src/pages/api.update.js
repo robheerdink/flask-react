@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import api from "../service/http-common";
 
 export default function Update() {
     const navigate = useNavigate();
@@ -20,7 +20,7 @@ export default function Update() {
         // important: prevent default behaviour
         event.preventDefault();
 
-        axios.put(`https://624594416b7ecf057c20719c.mockapi.io/fakeData/${id}`, {
+        api.put(`/fakeData/${id}`, {
             firstName,
             lastName,
             checkbox

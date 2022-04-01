@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from "react-router-dom"
+import api from "../service/http-common";
 
 export default function Create() {
     const navigate = useNavigate();
@@ -22,7 +22,7 @@ export default function Create() {
         console.log("lastName: " + lastName)
         console.log("checkbox: " + checkbox)
 
-        axios.post(`https://624594416b7ecf057c20719c.mockapi.io/fakeData`, {
+        api.post(`/fakeData`, {
             firstName,
             lastName,
             checkbox
