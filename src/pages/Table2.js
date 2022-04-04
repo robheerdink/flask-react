@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import FilterTable from '../components/filter.table';
+import ChannelService from '../service/channel';
 
 function TableFilter() {
     const columns = [
@@ -19,9 +20,7 @@ function TableFilter() {
     const [channels, setChannels] = useState([]);
   
     useEffect(() => {
-      fetch('/api/get_channels').then(res => res.json()).then(data => {
-        setChannels(data);
-      });
+      ChannelService.getAll().then(res => setChannels(res.data))
     }, []);
   
     return (

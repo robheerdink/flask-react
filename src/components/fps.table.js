@@ -179,9 +179,9 @@ function Table({ columns, data }) {
 }
 
 function FPSTable({ columns, data }) {
-    // console.log(JSON.stringify(data));
+    console.log(JSON.stringify(data));
     return (
-        <table columns={columns} data={data} />
+        <Table columns={columns} data={data} />
     )
 }
 

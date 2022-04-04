@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom"
-import api from "../service/http-common";
+import api from "../service/mock";
 
 export default function Create() {
     const navigate = useNavigate();
@@ -8,26 +8,20 @@ export default function Create() {
     const [lastName, setLastName] = useState('');
     const [checkbox, setCheckbox] = useState(false);
 
-    console.log("---on change data---")
-    console.log("firstName: " + firstName)
-    console.log("lastName: " + lastName)
-    console.log("checkbox: " + checkbox)
+    // console.log("---on change data---")
+    // console.log("firstName: " + firstName)
+    // console.log("lastName: " + lastName)
+    // console.log("checkbox: " + checkbox)
     
     const postData = (event) => {
-        // important: prevent default behaviour
         event.preventDefault();
-        
-        console.log("---on post data---")
-        console.log("firstName: " + firstName)
-        console.log("lastName: " + lastName)
-        console.log("checkbox: " + checkbox)
 
         api.post(`/fakeData`, {
             firstName,
             lastName,
             checkbox
-        }).then(() => {
-            console.log("post is done, navigate /api_read")
+        }).then((data) => {
+            // console.log(data);
             navigate(`/api_read`); 
         }).catch((error) => {
             console.log(error.toJSON());

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import api from "../service/http-common";
+import api from "../service/mock";
 
 
 export default function Read() {
@@ -27,10 +27,9 @@ export default function Read() {
     const setData = (data) => {
         let { id, firstName, lastName, checkbox } = data;
         localStorage.setItem('ID', id);
-        localStorage.setItem('First Name', firstName);
-        localStorage.setItem('Last Name', lastName);
-        localStorage.setItem('Checkbox Value', checkbox)
-        console.log("Clicked update button, navigate /api_update")
+        localStorage.setItem('FNAME', firstName);
+        localStorage.setItem('LNAME', lastName);
+        localStorage.setItem('CB', checkbox)
         navigate('/api_update');
     }
 

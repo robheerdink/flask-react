@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PaginationTable from '../components/pagination.table';
+import ChannelService from '../service/channel';
 
 function PageTableFilter() {
 	const columns = [
@@ -20,9 +21,7 @@ function PageTableFilter() {
 	const [channels, setChannels] = useState([]);
 
 	useEffect(() => {
-		fetch('/api/get_channels').then(res => res.json()).then(data => {
-			setChannels(data);
-		});
+		ChannelService.getAll().then(res => setChannels(res.data))
 	}, []);
 
 	return (

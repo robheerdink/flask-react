@@ -9,7 +9,7 @@ npm install react-router-dom
 npm install react-json-to-table
 npm install bootstrap
 npm i axios
-npm install semantic-ui-react semantic-ui-css
+react-hook-form
 
 # so we dont get cors errors, when running the compiled build files
 package.json > see proxy at the bottom > proxy": "http://127.0.0.1:5000"

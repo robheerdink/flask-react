@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from "../service/http-common";
+import api from "../service/mock";
 
 export default function Update() {
     const navigate = useNavigate();
+    
     const [id, setID] = useState(null);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -11,38 +12,40 @@ export default function Update() {
 
     useEffect(() => {
         setID(localStorage.getItem('ID'))
-        setFirstName(localStorage.getItem('First Name'));
-        setLastName(localStorage.getItem('Last Name'));
-        setCheckbox(localStorage.getItem('Checkbox Value'));
+        setFirstName(localStorage.getItem('FNAME'));
+        setLastName(localStorage.getItem('LNAME'));
+        setCheckbox(localStorage.getItem('CB'));
+        // console.log("initial checkbox in update:")
+        // console.log(localStorage.getItem('CB'))
+        // console.log(checkbox)
     }, []);
 
     const updateAPIData = (event) => {
-        // important: prevent default behaviour
         event.preventDefault();
-
         api.put(`/fakeData/${id}`, {
             firstName,
             lastName,
             checkbox
         }).then(() => {
-            console.log("update done, navigate /api_read")
             navigate('/api_read')
         })
     }
+
     return (
+        
         <div className="main">
             <form className="create-form">
                 <div>
                     <label>First Name</label>
-                    <input placeholder='First Name' onChange={(e) => setFirstName(e.target.value)}/>
+                    <input placeholder='First Name' value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
                 </div>
                 <div>
                     <label>Last Name</label>
-                    <input placeholder='Last Name' onChange={(e) => setLastName(e.target.value)}/>
+                    <input placeholder='Last Name' value={lastName} onChange={(e) => setLastName(e.target.value)}/>
                 </div>
                 <div>
                     <label>I agree to the Terms and Conditions</label>
-                    <input type="checkbox" id="agree" name="agree" onChange={(e) => setCheckbox(!checkbox)}/>
+                    <input type="checkbox" id="agree" name="agree" checked={checkbox} onChange={() => setCheckbox(!checkbox)}/>
                 </div>
                 <button onClick={updateAPIData} type="submit">update</button>
             </form>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SortingTable from '../components/sorting.table';
+import ChannelService from '../service/channel';
 
 function PageTableSorting() {
 	const columns = [
@@ -25,9 +26,7 @@ function PageTableSorting() {
 	const [channels, setChannels] = useState([]);
 
 	useEffect(() => {
-		fetch('/api/get_channels').then(res => res.json()).then(data => {
-			setChannels(data);
-		});
+		ChannelService.getAll().then(res => setChannels(res.data))
 	}, []);
 
 	return (

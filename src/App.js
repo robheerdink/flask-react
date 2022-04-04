@@ -11,6 +11,7 @@ import PageTableFPS from './pages/TableFPS';
 import Create from './pages/api.post';
 import Read from './pages/api.read';
 import Update from './pages/api.update';
+import Form1 from './pages/hookform1';
 
 function App() {
   const sep = ' | '
@@ -28,7 +29,8 @@ function App() {
             <Link className="App-link" to="/tableFPS">Table FPS</Link>{sep}
             <Link className="App-link" to="/api_post">api post</Link>{sep}
             <Link className="App-link" to="/api_read">api get</Link>{sep}
-            <Link className="App-link" to="/api_update">api update</Link>
+            <Link className="App-link" to="/api_update">api update</Link>{sep}
+            <Link className="App-link" to="/hookform1">hook from test 1</Link>{sep}
       </div>
           </header>
           <Routes>
@@ -42,6 +44,7 @@ function App() {
             <Route path="/api_post"  element={<Create/>} />
             <Route path="/api_read"  element={<Read/>} />
             <Route path="/api_update"  element={<Update/>} />
+            <Route path="/hookform1"  element={<Form1/>} />
           </Routes>
         </BrowserRouter>
     </div>
