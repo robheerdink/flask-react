@@ -12,7 +12,11 @@ localhost:5000/api/get_programs
 localhost:5000/api/get_schedules
 
 http://localhost:5000/api/channels
-http://localhost:5000/api/channels?id=0
+http://localhost:5000/api/channels/1
+http://localhost:5000/api/channels/name/aaa
+http://localhost:5000/api/channels/title/bbb
+http://localhost:5000/api/channels/title/not-exist
+
 """
 
 
@@ -35,25 +39,6 @@ def test_db():
         return "ok"
     except:
         return "error"
-
-
-
-
-
-@app.route('/api/get_channels')
-def get_channels_old():
-    return jsonify(channels.dump(Channel.query.all()))
-
-
-# @app.route('/get_programs')
-# def get_programs():
-#     return jsonify(programs.dump(Program.query.all()))
-
-
-# @app.route('/get_schedules')
-# def get_schedules():
-#     return jsonify(schedules.dump(Schedule.query.all()))
-
 
 
 @app.route('/api/channels', methods=["GET"])
@@ -80,7 +65,14 @@ def remove_channel(id):
 def remove_remove_all_channels(id):
     pass
 
-@app.route('/api/channels/<string:title>', methods=["GET"])
+@app.route('/api/channels/name/<string:name>', methods=["GET"])
+def find_channel_by_name(name):
+    q = Channel.query.filter(Channel.name.like(name))
+    return jsonify(channels.dump(q))
+
+@app.route('/api/channels/title/<string:title>', methods=["GET"])
 def find_channel_by_title(title):
-    pass
+    q = Channel.query.filter(Channel.title.like(title))
+    return jsonify(channels.dump(q))
+
 

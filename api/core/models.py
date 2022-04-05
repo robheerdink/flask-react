@@ -15,7 +15,7 @@ class Channel(db.Model):
 
 class ChannelSchema(ma.Schema):
     class Meta:
-        fields = ("name", "title", "timezone")
+        fields = ("id", "name", "title", "timezone")
 
 
 class Program(db.Model):

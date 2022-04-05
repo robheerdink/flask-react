@@ -7,12 +7,14 @@ insert into program(name, title, description, genre, rating) values ('midday mah
 insert into program(name, title, description, genre, rating) values ('metal maddess', 'Metal Maddness', 'Loud as hell', 'music', 'nr');
 insert into program(name, title, description, genre, rating) values ('flower power', 'Flower Power', 'Make love not war', 'music', 'nr');
 insert into program(name, title, description, genre, rating) values ('flower power (germany)', 'Flower Power', 'Macht Liebe, nicht Krieg', 'music', 'nr');
+insert into program(name, title, description, genre, rating) values ('aaa', 'bbb', 'ccc', 'ddd', 'eee');
 
 insert into channel(name, title, timezone) values ('Samsung Rock On (US)', 'Rock On!', 'US/Eastern');
 insert into channel(name, title, timezone) values ('Samsung Rock On (NL)', 'Rock On!','Europe/Amsterdam');
 insert into channel(name, title, timezone) values ('LG Rock On (CA)', 'Rock On!', 'US/Eastern');
 insert into channel(name, title, timezone) values ('XITE HITS (NL)', 'XITE HITS', 'Europe/Amsterdam');
 insert into channel(name, title, timezone) values ('XITE HITS (DE)', 'XITE HITS', 'Europe/Amsterdam');
+insert into channel(name, title, timezone) values ('aaa', 'bbb', 'ccc');
 
 insert into schedule(program_id, channel_id, start, "end") values (1,1,'2022-02-15 00:00:00', '2022-02-16 05:00:00');
 insert into schedule(program_id, channel_id, start, "end") values (2,1,'2022-02-15 05:00:00', '2022-02-16 07:00:00');
