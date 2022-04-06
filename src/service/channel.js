@@ -26,8 +26,13 @@ const removeAll = () => {
   return axios.delete(`/channels`);
 };
 
-const findByTitle = (title) => {
-  return axios.get(`/channels?title=${title}`);
+const findByName = (value) => {
+  return axios.get(`/channels/name/${value}`);
+};
+
+const findByTitle = (value) => {
+  //return axios.get(`/channels?title=${value}`);
+  return axios.get(`/channels/title/${value}`);
 };
 
 const ChannelService = {

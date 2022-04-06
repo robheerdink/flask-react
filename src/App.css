@@ -47,6 +47,7 @@ body {
   display: flex;
   flex-direction: row;
   /* flex-direction: column; */
+  text-align: left;
   margin: 10px;
 }
 
@@ -54,14 +55,22 @@ body {
   color: #212121;
   font-family: 'Montserrat', sans-serif;
   font-size: 12px !important;
- 
   flex: none;
   display: block;
-  width: 200px;
+  width: 150px;
   font-weight: bold;
   font-size: 1em;
 }
-.form-group label.right-inline {
+
+.submit-button {
+  margin:auto;
+  width:75%;
+  display: block;
+}
+
+
+
+/* .form-group label.right-inline {
   text-align: right;  
   padding-right: 8px;
   padding-left: 10px;
@@ -71,7 +80,7 @@ body {
 .form-group .input-control {
   flex: 1 1 auto;
   display: block;
-}
+} */
 
 
 
