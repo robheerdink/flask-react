@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 function PageTest() {
 	const [count, setCount] = useState(0);
-	console.log("test")
-	
 	return (
 		<div>
 			<p>You clicked {count} times</p>

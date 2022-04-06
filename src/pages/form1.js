@@ -41,32 +41,24 @@ const Form1 = () => {
 	<div className="main">
     <form onSubmit={handleSubmit(handleRegistration, handleError)}>
     	<div className="form-group">
-			<label>Name</label>
-			<input name="name" type="text" {...register('name', registerOptions.name) }/>
-			<small className="text-danger">
-				{errors?.name && errors.name.message}
+				<label>Name</label>
+				<input type="text" {...register('name', registerOptions.name) }/>
+			<small  className="text-danger">
+				{errors.name && errors.name.message}
 			</small>
     	</div>
 		<div className="form-group">
 			<label>Email</label>
-			<input
-				type="email"
-				name="email"
-				{...register('email', registerOptions.email)}
-			/>
+			<input type="email" {...register('email', registerOptions.email)}/>
 			<small className="text-danger">
-				{errors?.email && errors.email.message}
+				{errors.email && errors.email.message}
 			</small>
 		</div>
 		<div className="form-group">
 			<label>Password</label>
-			<input
-			type="password"
-			name="password"
-			{...register('password', registerOptions.password)}
-			/>
+			<input type="password" {...register('password', registerOptions.password)}/>
 			<small className="text-danger">
-			{errors?.password && errors.password.message}
+				{errors.password && errors.password.message}
 			</small>
       </div>
       <button>Submit</button>

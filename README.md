@@ -5,11 +5,12 @@ cd react-flask-app
 # to recreate modules
 npm install
 
-npm install react-router-dom
-npm install react-json-to-table
-npm install bootstrap
+npm i react-router-dom
+npm i react-json-to-table
+npm i bootstrap
 npm i axios
-react-hook-form
+npm i react-hook-form
+npm i --save typescript @types/node @types/react @types/react-dom @types/jest
 
 # so we dont get cors errors, when running the compiled build files
 package.json > see proxy at the bottom > proxy": "http://127.0.0.1:5000"

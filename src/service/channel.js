@@ -42,6 +42,7 @@ const ChannelService = {
   update,
   remove,
   removeAll,
+  findByName,
   findByTitle,
 };
 
