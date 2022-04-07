@@ -51,7 +51,13 @@ def get_channel(id):
 
 @app.route('/api/channels', methods=["POST"])
 def create_channel():
-    pass
+    name = request.POST['name']
+    title = request.POST['title']
+    timezone = request.POST['timezone']
+    channel = Channel(name=name, title=title, timezone=timezone)
+    db.session.add(channel)
+    db.session.commit()
+
 
 @app.route('/api/channels/<int:id>', methods=["PUT"])
 def update_channel(id):

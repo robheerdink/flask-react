@@ -1,16 +1,20 @@
-import React from "react";
+import React,  { useState }  from "react";
 import { useForm } from "react-hook-form";
 import axios, { AxiosError } from "axios";
 import ChannelService from '../service/channel';
-import { Server } from "http";
+
 
 const Form2 = () => {
+	// not sure if this is the best way
+	const [name, setFirstName] = useState('');
+    const [title, setLastName] = useState('');
+    const [timezone, setCheckbox] = useState('');
 
 	type FormInputs = {
 		name: string;
 		title: string;
 		timezone: string;
-		backend: string;
+		api: string;
 	};
 
 	const { 
@@ -20,41 +24,47 @@ const Form2 = () => {
 		setError, 
 	} = useForm<FormInputs>();
 
-	const serverError = ((e: AxiosError) => {
+	const serverError = ( (e: AxiosError | Error) => {
 		let msg = ''
-		if (e.response) {
-			msg = " Status: " + e.response.status
-		}
-		setError('backend', {type: "server", message: 'Oh no backend is not working.' + msg});
-	});
-
-	const handleError = ((e: AxiosError<any, any> ) => {
 		if (axios.isAxiosError(e)) {
-			serverError(e)
+			if (e.response) {
+				msg = " Status: " + e.response.status
+			}
 		} else{
-			console.log(e)
-			setError('backend', {type: "server", message: 'Unknown error'});
+			msg = " Unknown error."
 		}
+		setError('api', {message: 'Backend failure:' + msg});
 	});
 
-	const onSubmit = handleSubmit(data => {
-		console.log(data)
 
-		ChannelService.findByName(data.name)
-		.then(data => {
-			if (JSON.parse(data.request.response).length > 0){
-				setError('name', {type: "server", message: 'Name already exists'});
-			}
-		})
-		.catch((e) => handleError(e));
+	const onSubmit = handleSubmit(form => {
 
-		ChannelService.findByTitle(data.title)
-		.then(data => {
-			if (JSON.parse(data.request.response).length > 0){
-				setError('title', {type: "server", message: 'Title already exists'});
+		// server sided validation
+		axios.all([
+			ChannelService.findByName(form.name),
+			ChannelService.findByTitle(form.title)
+		])
+		.then(axios.spread((res1, res2) => {  
+			let serverSideValid = true;
+
+			if (res1.data.length > 0){
+				serverSideValid = false
+				setError('name', {message: 'Name already exists'});
 			}
+
+			if (res2.data.length > 0){
+				serverSideValid = false
+				setError('title', {message: 'Title already exists'});
+			}
+
+			if (serverSideValid){
+				console.log("all good we can post")
+				ChannelService.create({name, title, timezone})
+			}
+		}))
+		.catch(error => { 
+			serverError(error);
 		})
-		.catch((e) => handleError(e));
 	});
 
 	console.log(errors);
@@ -121,7 +131,7 @@ const Form2 = () => {
 		</div>
 		<div className="form-group">
 			<small className="text-danger">
-			{errors.backend && errors.backend.message}
+			{errors.api && errors.api.message}
 			</small>
       	</div>
       	<button>Submit</button>

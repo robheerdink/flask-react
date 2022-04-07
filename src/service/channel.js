@@ -31,7 +31,6 @@ const findByName = (value) => {
 };
 
 const findByTitle = (value) => {
-  //return axios.get(`/channels?title=${value}`);
   return axios.get(`/channels/title/${value}`);
 };
 
