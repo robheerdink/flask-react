@@ -10,14 +10,41 @@ function PageTableFPS() {
             accessor: 'name',
         },
         {
+            Header: 'Title',
+            accessor: 'title',
+        },
+        {
             Header: 'Timezone',
             accessor: 'timezone',
         },
         {
-            Header: 'Title',
-            accessor: 'title',
-        },
+            Header: '',
+            disableFilters: true,
+            accessor: (originalRow, rowIndex) => (
+               <div>
+                   <button onClick={() => handleEdit(originalRow)}>Edit</button>
+                   <button onClick={() => handleDelete(originalRow)}>Delete</button>
+               </div>
+            ),
+            id: 'action',
+    
+          },
 	];
+
+    const handleEdit = (data) => {
+        console.log("EDIT")
+        // let { id, firstName, lastName, checkbox } = data;
+        // localStorage.setItem('ID', id);
+        // localStorage.setItem('FNAME', firstName);
+        // localStorage.setItem('LNAME', lastName);
+        // localStorage.setItem('CB', checkbox)
+        // navigate('/api_update');
+    }
+
+    const handleDelete = (data) => {
+        console.log("UPDATE")
+    }
+
   
     const [channels, setChannels] = useState([]);
   

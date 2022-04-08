@@ -22,11 +22,13 @@ function App() {
         	<header className="App-header">
         	<div>
 				<Link className="App-link" to="/">home</Link>{sep}
+				{/*
 				<Link className="App-link" to="/test">test</Link>{sep}
 				<Link className="App-link" to="/table1">Table simple</Link>{sep}
 				<Link className="App-link" to="/table2">Table Filter</Link> {sep}
 				<Link className="App-link" to="/table3">Table Pagination</Link>{sep}
-				<Link className="App-link" to="/table4">Table Sorting</Link>{sep}
+				<Link className="App-link" to="/table4">Table Sorting</Link>{sep} 
+				*/}
 				<Link className="App-link" to="/tableFPS">Table FPS</Link>{sep}
 				<Link className="App-link" to="/api_post">api post</Link>{sep}
 				<Link className="App-link" to="/api_read">api get</Link>{sep}
@@ -37,11 +39,13 @@ function App() {
           	</header>
 				<Routes>
 					<Route exact path="/"  element={<PageHome/>} />
+					{/*
 					<Route path="/test"  element={<PageTest/>}  />
 					<Route path="/table1"  element={<PageTableSimple/>} />
 					<Route path="/table2"  element={<PageTableFilter/>} />
 					<Route path="/table3"  element={<PageTablePagination/>} />
-					<Route path="/table4"  element={<PageTableSorting/>} /> 
+					<Route path="/table4"  element={<PageTableSorting/>} />
+					*/}
 					<Route path="/tableFPS"  element={<PageTableFPS/>} />
 					<Route path="/api_post"  element={<Create/>} />
 					<Route path="/api_read"  element={<Read/>} />

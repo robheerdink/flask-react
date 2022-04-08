@@ -1,5 +1,5 @@
 import time
-from flask import jsonify
+from flask import jsonify, request
 from core import app
 from core.models import *
 """
@@ -16,7 +16,6 @@ http://localhost:5000/api/channels/1
 http://localhost:5000/api/channels/name/aaa
 http://localhost:5000/api/channels/title/bbb
 http://localhost:5000/api/channels/title/not-exist
-
 """
 
 
@@ -43,33 +42,56 @@ def test_db():
 
 @app.route('/api/channels', methods=["GET"])
 def get_channels():
-     return jsonify(channels.dump(Channel.query.all()))
+    q = Channel.query.all()
+    return jsonify(channels.dump(q))
 
 @app.route('/api/channels/<int:id>', methods=["GET"])
 def get_channel(id):
-    return jsonify(channel.dump(Channel.query.get(id)))
+    q = Channel.query.get(id)
+    return jsonify(channel.dump(q))
 
 @app.route('/api/channels', methods=["POST"])
 def create_channel():
-    name = request.POST['name']
-    title = request.POST['title']
-    timezone = request.POST['timezone']
-    channel = Channel(name=name, title=title, timezone=timezone)
-    db.session.add(channel)
-    db.session.commit()
-
+    try:
+        data = request.json
+        channel = Channel(name=data['name'], title=data['title'], timezone=data['timezone'])
+        db.session.add(channel)
+        db.session.commit()
+    except Exception as e:
+       result = jsonify({'success':False}, 500)
+    else:   
+        result = jsonify({'success':True}, 200)
+    return result
 
 @app.route('/api/channels/<int:id>', methods=["PUT"])
 def update_channel(id):
-    pass
+    # untested
+    channel = Channel.query.get(id)
+    
+    # data = request.json
+    # channel.name = date['name']
+
+    channel.name = "Changed"
+    db.session.commit()
+    return {}
+    
 
 @app.route('/api/channels/<int:id>', methods=["DELETE"])
-def remove_channel(id):
-    pass
+def delete_channel(id):
+    # untested
+    db.session.query(TemplateList).delete()
+    db.session.query(Template).delete()
+    db.session.query(Schedule).delete()
+    db.session.query(Channel).delete()
+    db.session.commit()
+    return {}
 
-@app.route('/api/channels/<int:id>', methods=["DELETE"])
-def remove_remove_all_channels(id):
-    pass
+@app.route('/api/channels/', methods=["DELETE"])
+def delete_channels():
+    # untested
+    db.session.query(Channel).filter(Channel.id==id).delete()
+    db.session.commit()
+    return {}
 
 @app.route('/api/channels/name/<string:name>', methods=["GET"])
 def find_channel_by_name(name):
@@ -80,5 +102,3 @@ def find_channel_by_name(name):
 def find_channel_by_title(title):
     q = Channel.query.filter(Channel.title.like(title))
     return jsonify(channels.dump(q))
-
-

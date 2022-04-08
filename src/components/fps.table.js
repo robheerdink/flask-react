@@ -25,8 +25,13 @@ function GlobalFilter({preGlobalFilteredRows,globalFilter,setGlobalFilter,}) {
     )
 }
 
-// DefineUI for Coumn filtering
+// DefineUI for Column filtering
 function DefaultColumnFilter({column: { filterValue, preFilteredRows, setFilter },}) {
+    console.log( {column: { filterValue, preFilteredRows, setFilter },} )
+   
+    // if ( {column['Header']} == "" ) {
+    //     return <div/>
+    // }
     return (
         <input
             className="form-control"
@@ -40,11 +45,9 @@ function DefaultColumnFilter({column: { filterValue, preFilteredRows, setFilter 
 }
 
 function Table({ columns, data }) {
+    //console.log({ columns, data })
     const defaultColumn = React.useMemo(
-        () => ({
-            // Default Filter UI
-            Filter: DefaultColumnFilter,
-        }),[])
+        () => ({Filter: DefaultColumnFilter,}),[])
 
     // Use the state and functions returned from useTable to build your UI
     const {
@@ -179,7 +182,7 @@ function Table({ columns, data }) {
 }
 
 function FPSTable({ columns, data }) {
-    console.log(JSON.stringify(data));
+    // console.log(JSON.stringify(data));
     return (
         <Table columns={columns} data={data} />
     )

@@ -1,15 +1,11 @@
-import React,  { useState }  from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import axios, { AxiosError } from "axios";
 import ChannelService from '../service/channel';
+import { useNavigate } from "react-router-dom"
 
 
 const Form2 = () => {
-	// not sure if this is the best way
-	const [name, setFirstName] = useState('');
-    const [title, setLastName] = useState('');
-    const [timezone, setCheckbox] = useState('');
-
 	type FormInputs = {
 		name: string;
 		title: string;
@@ -36,9 +32,9 @@ const Form2 = () => {
 		setError('api', {message: 'Backend failure:' + msg});
 	});
 
+	const navigate = useNavigate();
 
 	const onSubmit = handleSubmit(form => {
-
 		// server sided validation
 		axios.all([
 			ChannelService.findByName(form.name),
@@ -59,7 +55,18 @@ const Form2 = () => {
 
 			if (serverSideValid){
 				console.log("all good we can post")
+				const name = form.name
+				const title = form.title
+				const timezone = form.timezone
 				ChannelService.create({name, title, timezone})
+				.then( res => {
+					console.log(res)
+					navigate(`/tableFPS`); 
+				})
+				.catch(error => { 
+					console.log("we are NOT successfull")
+					serverError(error);
+				});
 			}
 		}))
 		.catch(error => { 
@@ -67,7 +74,7 @@ const Form2 = () => {
 		})
 	});
 
-	console.log(errors);
+	// console.log(errors);
 
 	const registerOptions = {
 		name: { 

@@ -15,6 +15,7 @@ export default function Create() {
     
     const postData = (event) => {
         event.preventDefault();
+        console.log(firstName)
 
         api.post(`/fakeData`, {
             firstName,
