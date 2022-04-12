@@ -75,21 +75,20 @@ def update_channel(id):
     db.session.commit()
     return {}
     
-
 @app.route('/api/channels/<int:id>', methods=["DELETE"])
 def delete_channel(id):
-    # untested
-    db.session.query(TemplateList).delete()
-    db.session.query(Template).delete()
-    db.session.query(Schedule).delete()
-    db.session.query(Channel).delete()
+    print( str(id) )
+    db.session.query(Channel).filter(Channel.id==id).delete()
     db.session.commit()
     return {}
 
 @app.route('/api/channels/', methods=["DELETE"])
 def delete_channels():
     # untested
-    db.session.query(Channel).filter(Channel.id==id).delete()
+    db.session.query(TemplateList).delete()
+    db.session.query(Template).delete()
+    db.session.query(Schedule).delete()
+    db.session.query(Channel).delete()
     db.session.commit()
     return {}
 

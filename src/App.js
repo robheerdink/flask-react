@@ -7,12 +7,12 @@ import PageTableSimple from './pages/Table1';
 import PageTableFilter from './pages/Table2';
 import PageTablePagination from './pages/Table3';
 import PageTableSorting from './pages/Table4';
-import PageTableFPS from './pages/TableFPS';
+import PageChannels from './pages/TableChannels';
 import Create from './pages/api.post';
 import Read from './pages/api.read';
 import Update from './pages/api.update';
 import Form1 from './pages/form1';
-import Form2 from './pages/form2';
+import FormChannels from './pages/formChannels';
 
 function App() {
   const sep = ' | '
@@ -29,12 +29,13 @@ function App() {
 				<Link className="App-link" to="/table3">Table Pagination</Link>{sep}
 				<Link className="App-link" to="/table4">Table Sorting</Link>{sep} 
 				*/}
-				<Link className="App-link" to="/tableFPS">Table FPS</Link>{sep}
+				<Link className="App-link" to="/form_channels">Form Channels</Link>{sep}
+				<Link className="App-link" to="/channels">Channels</Link>{sep}
 				<Link className="App-link" to="/api_post">api post</Link>{sep}
 				<Link className="App-link" to="/api_read">api get</Link>{sep}
 				<Link className="App-link" to="/api_update">api update</Link>{sep}
 				<Link className="App-link" to="/form1">Form 1</Link>{sep}
-				<Link className="App-link" to="/form2">Form 2</Link>{sep}
+				
         	</div>
           	</header>
 				<Routes>
@@ -46,12 +47,12 @@ function App() {
 					<Route path="/table3"  element={<PageTablePagination/>} />
 					<Route path="/table4"  element={<PageTableSorting/>} />
 					*/}
-					<Route path="/tableFPS"  element={<PageTableFPS/>} />
+					<Route path="/channels"  element={<PageChannels/>} />
 					<Route path="/api_post"  element={<Create/>} />
 					<Route path="/api_read"  element={<Read/>} />
 					<Route path="/api_update"  element={<Update/>} />
 					<Route path="/form1"  element={<Form1/>} />
-					<Route path="/form2"  element={<Form2/>} />
+					<Route path="/form_channels"  element={<FormChannels/>} />
           	</Routes>
         </BrowserRouter>
     </div>

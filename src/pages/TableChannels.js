@@ -1,23 +1,32 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import FPSTable from '../components/fps.table';
 import ChannelService from '../service/channel';
 
 
 function PageTableFPS() {
+    const navigate = useNavigate();
+    const [channels, setChannels] = useState([]);
+
+    const getData = () => {
+        ChannelService.getAll().then(response => setChannels(response.data))
+    }
+    
+    useEffect(() => {
+        getData();
+	}, []);
+
     const columns = [
         {
             Header: 'Name',
             accessor: 'name',
-        },
-        {
+        },{
             Header: 'Title',
             accessor: 'title',
-        },
-        {
+        },{
             Header: 'Timezone',
             accessor: 'timezone',
-        },
-        {
+        },{
             Header: '',
             disableFilters: true,
             accessor: (originalRow, rowIndex) => (
@@ -27,31 +36,21 @@ function PageTableFPS() {
                </div>
             ),
             id: 'action',
-    
-          },
+        },
 	];
 
     const handleEdit = (data) => {
-        console.log("EDIT")
-        // let { id, firstName, lastName, checkbox } = data;
-        // localStorage.setItem('ID', id);
-        // localStorage.setItem('FNAME', firstName);
-        // localStorage.setItem('LNAME', lastName);
-        // localStorage.setItem('CB', checkbox)
-        // navigate('/api_update');
+        localStorage.setItem('ID', id);
+        localStorage.setItem('NAME', firstName);
+        localStorage.setItem('TITLE', lastName);
+        localStorage.setItem('TIMEZONE', checkbox)
+        navigate('/form_channels', { state: data});
     }
 
     const handleDelete = (data) => {
-        console.log("UPDATE")
+                ChannelService.remove(data.id).then(getData());
     }
 
-  
-    const [channels, setChannels] = useState([]);
-  
-    useEffect(() => {
-	    ChannelService.getAll().then(res => setChannels(res.data))
-	}, []);
-        
     return (
 		<div>
 			<h3>Filter Paginate Sort Table</h3>

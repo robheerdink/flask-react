@@ -27,11 +27,6 @@ function GlobalFilter({preGlobalFilteredRows,globalFilter,setGlobalFilter,}) {
 
 // DefineUI for Column filtering
 function DefaultColumnFilter({column: { filterValue, preFilteredRows, setFilter },}) {
-    console.log( {column: { filterValue, preFilteredRows, setFilter },} )
-   
-    // if ( {column['Header']} == "" ) {
-    //     return <div/>
-    // }
     return (
         <input
             className="form-control"
