@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import axios, { AxiosError } from "axios";
@@ -6,48 +6,38 @@ import ChannelService from '../service/channel';
 
 
 const FormChannels = () => {
-	console.log("DOM CHANGED")
-
-	type FormInputs = {
+	type ChannelInput = {
+		id: string;
 		name: string;
 		title: string;
 		timezone: string;
 		api: string;
 	};
 
-	type CustomizedState = {
-		id: number;
-		name: string;
-		title: string;
-		timezone: string;
-		initial: boolean
-	} 
-
-	const navigate = useNavigate();
 	const location = useLocation();
+	const navigate = useNavigate();
 	
-	// issue this is always exectured on dome chnage
-	// needs only to be executed on some page chnage event
-	// better to use local storage
-	const state = location.state as CustomizedState
+	const state = location.state as ChannelInput
 	let { id, name, title, timezone } = state || {}
 	let update = (id == undefined) ? false : true;
+	
 
 	const { 
 		register,
-		setValue,
-		getValues,
-		handleSubmit, 
+		handleSubmit,
+		reset, 
 		formState: { errors }, 
 		setError, 
-	} = useForm<FormInputs>();
+	} = useForm<ChannelInput>();
 
-	if (update){
-		console.log('update mode, prefilling values.', state)
-		setValue("name", name)
-		setValue("title", title)
-		setValue("timezone", timezone)
-	}
+	useEffect(() => {
+		console.log(id, name, title, timezone)
+		reset({
+            name: name,
+            title: title,
+			timezone: timezone
+        })
+    }, []);
 
 	const serverError = ( (e: AxiosError | Error) => {
 		let msg = ''
@@ -61,34 +51,79 @@ const FormChannels = () => {
 		setError('api', {message: 'Backend failure:' + msg});
 	});
 
-	const onSubmit = handleSubmit(form => {
-		console.log("client validation passed, checking server side validations")
+	const onReset = () => {
+		console.log("on reset click")
+		reset({
+            name: name,
+            title: title,
+			timezone: timezone
+        })
+	}
+
+	const onSubmit = (data: ChannelInput) => {
+		console.log("client validation passed, checking server side validation", data)
+		
 		// update
 		if(update){
-			console.log(">> update <<")
+			console.log("check update")
+			axios.all([
+				ChannelService.findByName(data.name),
+				ChannelService.findByTitle(data.title)
+			]).then(axios.spread((res1, res2) => {  
+				let serverSideValid = true;
+				
+				// check if name already exists in any other row 
+				if (res1.data.length > 0){
+					for (let row of res1.data) {
+						if (row.id != id){
+							serverSideValid = false
+							setError('name', {message: 'Name already exists'});
+						}
+					}
+				}
+				// check if title already exists in any other row
+				if (res2.data.length > 0){
+					for (let row of res2.data) {
+						if (row.id != id){
+							serverSideValid = false
+							setError('title', {message: 'Title already exists'});
+						}
+					}
+				}
+				if (serverSideValid){
+					console.log("updating")
+					ChannelService.update(id, data)
+					.then( res => {
+						navigate(`/channels`); 
+					})
+					.catch(error => { 
+						serverError(error);
+					});
+				}
+			}));
 
 		} else{
-			console.log(">> create <<")
-			// Create 
+			console.log("check create")
 			axios.all([
-				ChannelService.findByName(form.name),
-				ChannelService.findByTitle(form.title)
+				ChannelService.findByName(data.name),
+				ChannelService.findByTitle(data.title)
 			])
 			.then(axios.spread((res1, res2) => {  
 				let serverSideValid = true;
-
+				
+				// check if name already exists
 				if (res1.data.length > 0){
 					serverSideValid = false
 					setError('name', {message: 'Name already exists'});
 				}
-
+				// check if name already exists
 				if (res2.data.length > 0){
 					serverSideValid = false
 					setError('title', {message: 'Title already exists'});
 				}
-
 				if (serverSideValid){
-					ChannelService.create(form)
+					console.log("creating")
+					ChannelService.create(data)
 					.then( res => {
 						navigate(`/channels`); 
 					})
@@ -101,7 +136,7 @@ const FormChannels = () => {
 				serverError(error);
 			})
 		}
-	});
+	};
 
 	// console.log(errors);
 
@@ -118,7 +153,7 @@ const FormChannels = () => {
 			},
 		},
 		title: { 
-			required: "Title is required" },
+			required: "Title is required",
 			minLength: {
 				value: 2,
 				message: "Title must have at least 2 characters"
@@ -127,11 +162,12 @@ const FormChannels = () => {
 				value: 80,
 				message: "Exceeding max characters of 80"
 			},
+		},
 		timezone: {
 			required: "Timezone is required",
 			minLength: {
 				value: 2,
-				message: "Timezone must have at least 8 characters"
+				message: "Timezone must have at least 2 characters"
 			},
 			maxLength: {
 				value: 80,
@@ -140,22 +176,23 @@ const FormChannels = () => {
 		},
 	};
 
-	const onSubmitClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-		//event.preventDefault();
-		const values = getValues();
-		console.log("onSubmitClick, updating values.", values );
-		setValue("name", values.name)
-		setValue("title", values.title)
-		setValue("timezone", values.timezone)
-	}
+	// form changes between create and update
+	let text = <p>Create Channel</p>;
+	let btns = <button type="submit">Submit</button>;
+	if (update){
+		text = <p>Update Channel</p>;
+		btns = <div>
+			<button type="submit">Change</button>
+			<button onClick={onReset}>Reset</button></div>;
+	} 
 
 	return (
 	<div className="main">
-	<p>{update ? 'Update' : 'Create'}</p>
-	<form onSubmit={onSubmit}>
+	{text}
+	<form onSubmit={handleSubmit(onSubmit)}>
     	<div className="form-group">
 			<label>Name</label>
-			<input type="text"  {...register('name', registerOptions.name) }/>
+			<input type="text"  {...register('name', registerOptions.name)}/>
 			<small className="text-danger">
 				{errors.name && errors.name.message}
 			</small>
@@ -178,8 +215,8 @@ const FormChannels = () => {
 			<small className="text-danger">
 			{errors.api && errors.api.message}
 			</small>
-      	</div>
-      	<button onClick={onSubmitClick} type="submit">{update ? 'Update' : 'Submit'}</button>
+      	</div> 
+      	{btns}
     </form>
 	</div>
   );

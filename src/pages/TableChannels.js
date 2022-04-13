@@ -40,10 +40,11 @@ function PageTableFPS() {
 	];
 
     const handleEdit = (data) => {
-        localStorage.setItem('ID', id);
-        localStorage.setItem('NAME', firstName);
-        localStorage.setItem('TITLE', lastName);
-        localStorage.setItem('TIMEZONE', checkbox)
+        localStorage.setItem('ID', data.id);
+        localStorage.setItem('NAME', data.name);
+        localStorage.setItem('TITLE', data.title);
+        localStorage.setItem('TIMEZONE', data.timezone)
+        
         navigate('/form_channels', { state: data});
     }
 

@@ -65,19 +65,23 @@ def create_channel():
 
 @app.route('/api/channels/<int:id>', methods=["PUT"])
 def update_channel(id):
-    # untested
     channel = Channel.query.get(id)
-    
-    # data = request.json
-    # channel.name = date['name']
-
-    channel.name = "Changed"
+    data = request.json
+    channel.name = data['name']
+    channel.title = data['title']
+    channel.timezone = data['timezone']
     db.session.commit()
     return {}
     
 @app.route('/api/channels/<int:id>', methods=["DELETE"])
 def delete_channel(id):
-    print( str(id) )
+    # sqlalchemy.exc.IntegrityError: (psycopg2.errors.ForeignKeyViolation) update or delete on table "channel" violates foreign key constraint "schedule_channel_id_fkey" on table "schedule"
+    # DETAIL:  Key (id)=(2) is still referenced from table "schedule".
+
+    # [SQL: DELETE FROM channel WHERE channel.id = %(id_1)s]
+    # [parameters: {'id_1': 2}]
+    # (Background on this error at: https://sqlalche.me/e/14/gkpj)
+
     db.session.query(Channel).filter(Channel.id==id).delete()
     db.session.commit()
     return {}
