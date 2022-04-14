@@ -55,3 +55,23 @@ CREATE INDEX ON "schedule" ("program_id");
 CREATE INDEX ON "schedule" ("channel_id");
 CREATE INDEX ON "schedule" ("program_id", "channel_id");
 
+
+/*
+channel_id  1->> schedule.channel_id
+program.id  1->> schedule.program_id
+schedule.id 1->> template_list.schedule_id
+template.id 1->> template_list.id
+
+# schedule
+program_id >> remove NOT NULL, if we want to be able to remove a program and keep the schedule, program_id would become null in this case
+channel_id >> remove NOT NULL, if we want to be able to remove a channel and keep the schedule, channel_id would become null in this case
+For now I think we would want to remove a schedule in case a related program or channel is removed
+(A similar scheduled program (aka schedule) with different times get unique id, we may want to have a check that we cant schedule on the same time or overlapping time on the same schannel)
+
+# template_list
+When deleting a template, we want to remove all rows with te same id from template_list (removing a template removes a collection schedules from template_list)
+when deleting a schedule, we want to remove all rows with te same schedule_id from template_list (one or more templates would get time gaps)
+
+cascading remove chain:
+progam >> schedule >> templates_list
+*/

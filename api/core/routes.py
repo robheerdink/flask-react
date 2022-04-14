@@ -82,7 +82,12 @@ def delete_channel(id):
     # [parameters: {'id_1': 2}]
     # (Background on this error at: https://sqlalche.me/e/14/gkpj)
 
-    db.session.query(Channel).filter(Channel.id==id).delete()
+    # delete on query object would fail
+    #db.session.query(Channel).filter(Channel.id==id).delete()
+
+    channel = db.session.query(Channel).filter(Channel.id==1).first()
+    db.session.delete(channel)
+
     db.session.commit()
     return {}
 

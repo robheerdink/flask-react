@@ -8,6 +8,7 @@ class Channel(db.Model):
     name = db.Column(db.String(), nullable=False)
     title = db.Column(db.String(), nullable=False)
     timezone = db.Column(db.String(), nullable=False)
+    children = db.relationship("Schedule", cascade="all, delete")
 
     def __repr__(self):
         return '{}'.format(self.name)
@@ -26,6 +27,7 @@ class Program(db.Model):
     description = db.Column(db.String(), nullable=False)
     genre = db.Column(db.String(), server_default='music')
     rating = db.Column(db.String(), server_default='nr')
+    children = db.relationship("Schedule", cascade="all, delete")
 
     def __repr__(self):
         return '{}'.format(self.name)
@@ -39,10 +41,13 @@ class ProgramSchema(ma.Schema):
 class Schedule(db.Model):
     __tablename__ = 'schedule'
     id = db.Column(db.Integer(), autoincrement=True, primary_key=True)
-    program_id = db.Column(db.Integer(), db.ForeignKey('program.id'), nullable=False)
-    channel_id = db.Column(db.Integer(), db.ForeignKey('channel.id'), nullable=False)
+    program_id = db.Column(db.Integer(), db.ForeignKey('program.id', ondelete="CASCADE"), nullable=False)
+    channel_id = db.Column(db.Integer(), db.ForeignKey('channel.id', ondelete="CASCADE"), nullable=False)
     start = db.Column(db.TIMESTAMP(), nullable=False)
     end = db.Column(db.TIMESTAMP(), nullable=False)
+    parent1 = db.relationship("Channel", back_populates="children")
+    parent2 = db.relationship("Program", back_populates="children")
+    children = db.relationship("TemplateList", cascade="all, delete")
 
     def __repr__(self):
         return 'id:{}, program_id:{}, channel_id:{}'.format(self.id, self.program_id, self.channel_id)
@@ -58,6 +63,7 @@ class Template(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(), nullable=False)
     description = db.Column(db.String(), nullable=False)
+    children = db.relationship("TemplateList", cascade="all, delete")
 
     def __repr__(self):
         return '{}'.format(self.name)
@@ -70,8 +76,10 @@ class TemplateSchema(ma.Schema):
 
 class TemplateList(db.Model):
     __tablename__ = 'template_list'
-    id = db.Column(db.Integer(), db.ForeignKey('template.id'), autoincrement=True, primary_key=True)
-    schedule_id = db.Column(db.Integer(), db.ForeignKey('schedule.id'), nullable=False, unique=True)
+    id = db.Column(db.Integer(), db.ForeignKey('template.id', ondelete="CASCADE"), autoincrement=True, primary_key=True)
+    schedule_id = db.Column(db.Integer(), db.ForeignKey('schedule.id', ondelete="CASCADE"), nullable=False, unique=True)
+    parent1 = db.relationship("Schedule", back_populates="children")
+    parent2 = db.relationship("Template", back_populates="children")
 
     def __repr__(self):
         return 'id:{}, schedule_id:{}'.format(self.id, self.schedule_id)
