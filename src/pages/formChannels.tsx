@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { MouseEvent, useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import axios, { AxiosError } from "axios";
 import ChannelService from '../service/channel';
-
 
 const FormChannels = () => {
 	type ChannelInput = {
@@ -11,16 +10,16 @@ const FormChannels = () => {
 		name: string;
 		title: string;
 		timezone: string;
-		api: string;
+		server: string;
+		update: boolean;
 	};
 
-	const location = useLocation();
 	const navigate = useNavigate();
+	const location = useLocation();
 	
+	// get state from navigate.location
 	const state = location.state as ChannelInput
-	let { id, name, title, timezone } = state || {}
-	let update = (id == undefined) ? false : true;
-	
+	let { id, name, title, timezone, update } = state || {}
 
 	const { 
 		register,
@@ -31,7 +30,6 @@ const FormChannels = () => {
 	} = useForm<ChannelInput>();
 
 	useEffect(() => {
-		console.log(id, name, title, timezone)
 		reset({
             name: name,
             title: title,
@@ -48,11 +46,11 @@ const FormChannels = () => {
 		} else{
 			msg = " Unknown error."
 		}
-		setError('api', {message: 'Backend failure:' + msg});
+		setError('server', {message: 'Backend failure:' + msg});
 	});
 
-	const onReset = () => {
-		console.log("on reset click")
+	const onReset = (event: MouseEvent<HTMLButtonElement>) => {
+		event.preventDefault();
 		reset({
             name: name,
             title: title,
@@ -62,10 +60,18 @@ const FormChannels = () => {
 
 	const onSubmit = (data: ChannelInput) => {
 		console.log("client validation passed, checking server side validation", data)
+
+
 		
 		// update
-		if(update){
+		if(update){``
 			console.log("check update")
+			
+			// TESTING SERVICE which validates itself
+			//const res = ChannelService.nameIsUnique(data, id)
+			//console.log(res)
+			
+			
 			axios.all([
 				ChannelService.findByName(data.name),
 				ChannelService.findByTitle(data.title)
@@ -96,11 +102,11 @@ const FormChannels = () => {
 					.then( res => {
 						navigate(`/channels`); 
 					})
-					.catch(error => { 
-						serverError(error);
-					});
 				}
-			}));
+			}))
+			.catch(error => { 
+				serverError(error);
+			});
 
 		} else{
 			console.log("check create")
@@ -114,12 +120,12 @@ const FormChannels = () => {
 				// check if name already exists
 				if (res1.data.length > 0){
 					serverSideValid = false
-					setError('name', {message: 'Name already exists'});
+					setError('name', {message: 'Name already exists!'});
 				}
 				// check if name already exists
 				if (res2.data.length > 0){
 					serverSideValid = false
-					setError('title', {message: 'Title already exists'});
+					setError('title', {message: 'Title already exists!'});
 				}
 				if (serverSideValid){
 					console.log("creating")
@@ -133,6 +139,7 @@ const FormChannels = () => {
 				}
 			}))
 			.catch(error => { 
+				console.log(error);
 				serverError(error);
 			})
 		}
@@ -185,7 +192,6 @@ const FormChannels = () => {
 			<button type="submit">Change</button>
 			<button onClick={onReset}>Reset</button></div>;
 	} 
-
 	return (
 	<div className="main">
 	{text}
@@ -213,7 +219,7 @@ const FormChannels = () => {
 		</div>
 		<div className="form-group">
 			<small className="text-danger">
-			{errors.api && errors.api.message}
+			{errors.server && errors.server.message}
 			</small>
       	</div> 
       	{btns}

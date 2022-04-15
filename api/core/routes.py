@@ -24,10 +24,10 @@ def get_current_time():
     return {'time': time.time()}
 
 
-@app.errorhandler(404)
-def not_found(e):
-    """ redirect unknown (client) routes, back to single page index """
-    return app.send_static_file('index.html')
+# @app.errorhandler(404)
+# def not_found(e):
+#     """ redirect unknown (client) routes, back to single page index """
+#     return app.send_static_file('index.html')
 
 
 @app.route('/api/db')
@@ -75,20 +75,17 @@ def update_channel(id):
     
 @app.route('/api/channels/<int:id>', methods=["DELETE"])
 def delete_channel(id):
-    # sqlalchemy.exc.IntegrityError: (psycopg2.errors.ForeignKeyViolation) update or delete on table "channel" violates foreign key constraint "schedule_channel_id_fkey" on table "schedule"
-    # DETAIL:  Key (id)=(2) is still referenced from table "schedule".
-
-    # [SQL: DELETE FROM channel WHERE channel.id = %(id_1)s]
-    # [parameters: {'id_1': 2}]
-    # (Background on this error at: https://sqlalche.me/e/14/gkpj)
-
-    # delete on query object would fail
-    #db.session.query(Channel).filter(Channel.id==id).delete()
-
-    channel = db.session.query(Channel).filter(Channel.id==1).first()
-    db.session.delete(channel)
-
-    db.session.commit()
+    """
+    does not work for cascading deletes
+    db.session.query(Channel).filter(Channel.id==id).delete()
+    
+    works, but in this case we can also use get() which is faster
+    channel = db.session.query(Channel).filter(Channel.id==id).first()
+    """
+    channel = Channel.query.get(id)
+    if channel is not None:
+        db.session.delete(channel)
+        db.session.commit()
     return {}
 
 @app.route('/api/channels/', methods=["DELETE"])

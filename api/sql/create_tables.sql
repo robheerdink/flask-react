@@ -73,5 +73,6 @@ When deleting a template, we want to remove all rows with te same id from templa
 when deleting a schedule, we want to remove all rows with te same schedule_id from template_list (one or more templates would get time gaps)
 
 cascading remove chain:
+channel >> schedule >> templates_list
 progam >> schedule >> templates_list
 */

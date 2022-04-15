@@ -6,13 +6,13 @@ import api from "../service/mock";
 
 export default function Read() {
     const navigate = useNavigate();
-    const [APIData, setAPIData] = useState([]);
+    const [TestData, setTestData] = useState([]);
 
     useEffect(() => {
         api.get(`/fakeData`)
             .then((response) => {
                 console.log(response.data)
-                setAPIData(response.data);
+                setTestData(response.data);
             })
     }, []);
 
@@ -20,7 +20,7 @@ export default function Read() {
     const getData = () => {
         api.get(`/fakeData`)
             .then((getData) => {
-                setAPIData(getData.data);
+                setTestData(getData.data);
             })
     }
 
@@ -54,7 +54,7 @@ export default function Read() {
                 </thead>
 
                 <tbody>
-                    {APIData.map((data) => {
+                    {TestData.map((data) => {
                         return (
                             <tr key={data.id}> 
                                 <td>{data.firstName}</td>

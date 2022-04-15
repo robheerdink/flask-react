@@ -7,7 +7,7 @@ import PageTableSimple from './pages/Table1';
 import PageTableFilter from './pages/Table2';
 import PageTablePagination from './pages/Table3';
 import PageTableSorting from './pages/Table4';
-import PageChannels from './pages/TableChannels';
+import PageChannels from './pages/ShowChannels';
 import Create from './pages/api.post';
 import Read from './pages/api.read';
 import Update from './pages/api.update';

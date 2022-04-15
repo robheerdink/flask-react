@@ -35,7 +35,7 @@ class Program(db.Model):
 
 class ProgramSchema(ma.Schema):
     class Meta:
-        fields = ("name", "title", "description", "genre", "rating")
+        fields = ("id", "name", "title", "description", "genre", "rating")
 
 
 class Schedule(db.Model):
@@ -55,7 +55,7 @@ class Schedule(db.Model):
 
 class ScheduleSchema(ma.Schema):
     class Meta:
-        fields = ("program_id", "channel_id", "start", "end")
+        fields = ("id", "program_id", "channel_id", "start", "end")
 
 
 class Template(db.Model):
@@ -71,10 +71,14 @@ class Template(db.Model):
 
 class TemplateSchema(ma.Schema):
     class Meta:
-        fields = ("name", "description")
+        fields = ("id", "name", "description")
 
 
 class TemplateList(db.Model):
+    __mapper_args__ = {
+        # allow multiple cascading deletes
+        'confirm_deleted_rows': False
+    }
     __tablename__ = 'template_list'
     id = db.Column(db.Integer(), db.ForeignKey('template.id', ondelete="CASCADE"), autoincrement=True, primary_key=True)
     schedule_id = db.Column(db.Integer(), db.ForeignKey('schedule.id', ondelete="CASCADE"), nullable=False, unique=True)

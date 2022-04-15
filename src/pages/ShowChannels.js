@@ -9,12 +9,27 @@ function PageTableFPS() {
     const [channels, setChannels] = useState([]);
 
     const getData = () => {
-        ChannelService.getAll().then(response => setChannels(response.data))
+        ChannelService.getAll()
+        .then( (response) => {
+            setChannels(response.data);
+        });
     }
     
     useEffect(() => {
         getData();
 	}, []);
+
+    const onEdit = (data) => {
+        data.update = true
+        navigate('/form_channels', { state: data});
+    }
+
+    const onDelete = (data) => {
+        ChannelService.remove(data.id)
+        .then( () => {
+            getData();
+        });
+    }
 
     const columns = [
         {
@@ -31,26 +46,13 @@ function PageTableFPS() {
             disableFilters: true,
             accessor: (originalRow, rowIndex) => (
                <div>
-                   <button onClick={() => handleEdit(originalRow)}>Edit</button>
-                   <button onClick={() => handleDelete(originalRow)}>Delete</button>
+                   <button onClick={() => onEdit(originalRow)}>Edit</button>
+                   <button onClick={() => onDelete(originalRow)}>Delete</button>
                </div>
             ),
             id: 'action',
         },
 	];
-
-    const handleEdit = (data) => {
-        localStorage.setItem('ID', data.id);
-        localStorage.setItem('NAME', data.name);
-        localStorage.setItem('TITLE', data.title);
-        localStorage.setItem('TIMEZONE', data.timezone)
-        
-        navigate('/form_channels', { state: data});
-    }
-
-    const handleDelete = (data) => {
-                ChannelService.remove(data.id).then(getData());
-    }
 
     return (
 		<div>
