@@ -1,68 +1,63 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter, Link, Routes, Route } from 'react-router-dom';
-import logo from './logo.svg';
 import './App.css';
+import PageHome from './pages/Home';
+import PageTest from './pages/Test';
+import PageTableSimple from './pages/Table1';
+import PageTableFilter from './pages/Table2';
+import PageTablePagination from './pages/Table3';
+import PageTableSorting from './pages/Table4';
+import PageChannels from './pages/ShowChannels';
+import Create from './pages/api.post';
+import Read from './pages/api.read';
+import Update from './pages/api.update';
+import Form1 from './pages/form1';
+import FormChannels from './pages/formChannels';
 
 function App() {
-  
-
+  const sep = ' | '
   return (
-    <div className="App">
-      <header className="App-header">
+	<div className="App">
         <BrowserRouter>
-          <div>
-            <Link className="App-link" to="/">Home</Link>
-            &nbsp;|&nbsp;
-            <Link className="App-link" to="/page2">Page2</Link>
-          </div>
-          <Routes>
-            <Route exact path="/"  element={<Page1/>} />
-            <Route path="/page2"  element={<Page2/>}  />
-          </Routes>
+        	<header className="App-header">
+        	<div>
+				<Link className="App-link" to="/">home</Link>{sep}
+				{/*
+				<Link className="App-link" to="/test">test</Link>{sep}
+				<Link className="App-link" to="/table1">Table simple</Link>{sep}
+				<Link className="App-link" to="/table2">Table Filter</Link> {sep}
+				<Link className="App-link" to="/table3">Table Pagination</Link>{sep}
+				<Link className="App-link" to="/table4">Table Sorting</Link>{sep} 
+				*/}
+				<Link className="App-link" to="/form_channels">Form Channels</Link>{sep}
+				<Link className="App-link" to="/channels">Channels</Link>{sep}
+				<Link className="App-link" to="/api_post">api post</Link>{sep}
+				<Link className="App-link" to="/api_read">api get</Link>{sep}
+				<Link className="App-link" to="/api_update">api update</Link>{sep}
+				<Link className="App-link" to="/form1">Form 1</Link>{sep}
+				
+        	</div>
+          	</header>
+				<Routes>
+					<Route exact path="/"  element={<PageHome/>} />
+					{/*
+					<Route path="/test"  element={<PageTest/>}  />
+					<Route path="/table1"  element={<PageTableSimple/>} />
+					<Route path="/table2"  element={<PageTableFilter/>} />
+					<Route path="/table3"  element={<PageTablePagination/>} />
+					<Route path="/table4"  element={<PageTableSorting/>} />
+					*/}
+					<Route path="/channels"  element={<PageChannels/>} />
+					<Route path="/api_post"  element={<Create/>} />
+					<Route path="/api_read"  element={<Read/>} />
+					<Route path="/api_update"  element={<Update/>} />
+					<Route path="/form1"  element={<Form1/>} />
+					<Route path="/form_channels"  element={<FormChannels/>} />
+          	</Routes>
         </BrowserRouter>
-      </header>
     </div>
   );
 }
-
-function Page1() {
-  const [currentTime, setCurrentTime] = useState(0);
-
-  useEffect(() => {
-    fetch('/api/time').then(res => res.json()).then(data => {
-      setCurrentTime(data.time);
-    });
-  }, []);
-
-  return (
-    <div>
-      <img src={logo} className="App-logo" alt="logo" />
-      <p>Edit <code>src/App.js</code> and save to reload.</p>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >Learn React</a>
-      <p>The current time is {currentTime}.</p>
-    </div>
-  )
-}
-
-
-function Page2() {
-  const [count, setCount] = useState(0);
-
-  return (
-    <div>
-      <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}>
-        Click me
-      </button>
-    </div>
-  );
-}
-
 
 
 export default App;

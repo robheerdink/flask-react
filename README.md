@@ -1,70 +1,59 @@
-# Getting Started with Create React App
+```
+npx create-react-app react-flask-app
+cd react-flask-app
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# to recreate modules
+npm install
 
-## Available Scripts
+# isntalled packages
+npm i react-router-dom
+npm i react-json-to-table
+npm i bootstrap
+npm i axios
+npm i react-hook-form
+npm i --save typescript @types/node @types/react @types/react-dom @types/jest
 
-In the project directory, you can run:
+# so we dont get cors errors, when running the compiled build files
+package.json > see proxy at the bottom > proxy": "http://127.0.0.1:5000"
 
-### `npm start`
+npm start
+npm test
+npm run build
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Need to run npm run build, for the first when viewing through flask server
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# Debugging backend / frontend
+- backend: Because venv is not in root of project most ide's dont detect it automaticly (see cwd and pythonPath)
+- frontend: npm start or yarn has to be running
+.vscode/launch.json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Flask Run / Debug",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceRoot}/api",
+            "pythonPath": "${workspaceRoot}/api/venv/bin/python",
+            "program": "run.py",
+            "env": {
+                "FLASK_APP": "run.py",
+                "FLASK_ENV": "development"
+            },
+            "args": [
+                "run",
+                "--no-debugger"
+            ]
+        },
+        {
+            "name": "REACT",
+            "type": "pwa-chrome",
+            "runtimeExecutable": "/usr/bin/brave-beta",
+            "request": "launch",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}"
+          }
+    ]
+}
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```

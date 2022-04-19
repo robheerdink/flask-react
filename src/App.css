@@ -1,7 +1,90 @@
-.App {
-  text-align: center;
+/* load custom font */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+html,
+body {
+  height: 100%;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
+/* center with flex box */
+.main{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: whitesmoke;
+  color: #212121;
+  flex-direction: column;
+  padding: 20px;
+}
+
+/* use custom font */
+.main-header{
+  font-family: 'Montserrat', sans-serif;
+}
+
+.App {
+  text-align: center;
+  background-color: whitesmoke;
+}
+
+.App-header {
+  background-color: whitesmoke;
+  font-size: calc(10px + 1vmin);
+  color: #212121;
+  margin-bottom: 10px;
+}
+
+.App-link {
+  color: #50a5cc;
+}
+
+
+/* form specific formatting */
+.form-group {
+  display: flex;
+  flex-direction: row;
+  /* flex-direction: column; */
+  text-align: left;
+  margin: 10px;
+}
+
+.form-group label {
+  color: #212121;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px !important;
+  flex: none;
+  display: block;
+  width: 150px;
+  font-weight: bold;
+  font-size: 1em;
+}
+
+.submit-button {
+  margin:auto;
+  width:75%;
+  display: block;
+}
+
+
+
+/* .form-group label.right-inline {
+  text-align: right;  
+  padding-right: 8px;
+  padding-left: 10px;
+  width: auto;
+}
+
+.form-group .input-control {
+  flex: 1 1 auto;
+  display: block;
+} */
+
+
+
+/* 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -13,21 +96,6 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -35,4 +103,5 @@
   to {
     transform: rotate(360deg);
   }
-}
+} 
+*/
