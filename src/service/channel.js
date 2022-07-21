@@ -34,26 +34,6 @@ const findByTitle = (value) => {
   return axios.get(`/channels/title/${value}`);
 };
 
-// const nameIsUnique = (value, id) => {
-
-// 	some issue with return
-// 	https://stackoverflow.com/questions/48980380/returning-data-from-axios-api
-
-// 	// check if name already exists in any other row
-// 	return axios.get(`channels/name/${value}`)
-//   	.then( (res) => {  
-// 		if (res.data.length > 0) {
-// 	  		for (let row of res.data) {
-// 				if (row.id != id){
-// 					return {validated: "fail"}
-// 				}
-// 			}
-// 		}
-// 		return {validated: "succes"}
-// 	})
-// 	});
-	
-// }
 
 const ChannelService = {
   getAll,
@@ -64,7 +44,6 @@ const ChannelService = {
   removeAll,
   findByName,
   findByTitle,
-  nameIsUnique,
 };
 
 export default ChannelService;

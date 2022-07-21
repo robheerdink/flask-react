@@ -5,7 +5,7 @@ from core.models import *
 """
 localhost:3000
 localhost:5000
-localhost:5000/index.tml
+localhost:5000/index.html
 localhost:5000/api/time
 localhost:5000/api/get_channels
 localhost:5000/api/get_programs
@@ -18,17 +18,19 @@ http://localhost:5000/api/channels/title/bbb
 http://localhost:5000/api/channels/title/not-exist
 """
 
-
-@app.route('/api/time')
-def get_current_time():
-    return {'time': time.time()}
-
+@app.route('/')
+def index():
+    print("ROOT")
+    return app.send_static_file('index.html')
 
 # @app.errorhandler(404)
 # def not_found(e):
 #     """ redirect unknown (client) routes, back to single page index """
 #     return app.send_static_file('index.html')
 
+@app.route('/api/time')
+def get_current_time():
+    return {'time': time.time()}
 
 @app.route('/api/db')
 def test_db():
